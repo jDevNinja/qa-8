@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -24,12 +25,12 @@ public class Main {
 
     // Предикат в виде анонимного класса
     Predicate<Account> mailStartsWithS =
-      new Predicate<Account>() {
-        @Override
-        public boolean test(Account account) {
-          return account.getEmail().startsWith("m");
-        }
-      };
+        new Predicate<Account>() {
+          @Override
+          public boolean test(Account account) {
+            return account.getEmail().startsWith("m");
+          }
+        };
 
     // Предикат в виде лямбды
     Predicate<Account> ageGte25Predicate = account -> account.age > 25;
@@ -148,6 +149,16 @@ public class Main {
                   return account;
                 })
             .count();
+
+    // правильно использовать forEach()
+    allUsers.forEach(new Consumer<Account>() {
+      @Override
+      public void accept(Account account) {
+        System.out.println(account);
+      }
+    });
+    
+    allUsers.forEach(System.out::println);
   }
 }
 
