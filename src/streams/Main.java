@@ -9,9 +9,30 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+class VerifeidUsersPredicate implements Predicate<Account> {
+  @Override
+  public boolean test(Account account) {
+    return account.isVerified();
+  }
+}
+
 public class Main {
 
   public static void main(String[] args) {
+    // Предикат в виде класса
+    VerifeidUsersPredicate verifeidUsersPredicate = new VerifeidUsersPredicate();
+
+    // Предикат в виде анонимного класса
+    Predicate<Account> mailStartsWithS =
+      new Predicate<Account>() {
+        @Override
+        public boolean test(Account account) {
+          return account.getEmail().startsWith("m");
+        }
+      };
+
+    // Предикат в виде лямбды
+    Predicate<Account> ageGte25Predicate = account -> account.age > 25;
 
     List<Account> allAccounts = DataGenerator.makeAccountsList();
 
